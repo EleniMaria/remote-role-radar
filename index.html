@@ -63,10 +63,41 @@
         <a href="#tracker" class="btn secondary">Launch Your Tracker</a>
       </div>
     </section>
-    <section id="jobs">
-      <h2>Latest Remote Jobs</h2>
-      <div id="job-listings" class="job-listings"></div>
-    </section>
-    <script src="remotive.js"></script>    
+ <section id="jobs">
+  <h2>Latest Remote Jobs</h2>
+  <div class="search-bar"><input type="text" id="search" placeholder="Search jobs..." /></div>
+  <div id="job-listings" class="job-listings"></div>
+</section>
+<section id="tracker">
+  <h2>My Tracked Jobs</h2>
+  <table id="job-tracker">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Job Title</th>
+        <th>Status</th>
+        <th>Date Applied</th>
+        <th>Follow-up Date</th>
+        <th>Notes</th>
+        <th>Link</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="tracked-jobs">
+      <!-- Tracked jobs will go here -->
+    </tbody>
+  </table>
+</section>
+<button id="download-csv" class="btn secondary">Download Tracked Jobs as CSV</button>
+<script src="remotive.js"></script> 
+    <noscript>
+  <p style="text-align:center; color: red;">
+    This site requires JavaScript to function properly. Please enable it in your browser settings.
+  </p>
+</noscript> 
+<br>
+<footer class="site-footer">
+  <p>© 2025 Remote Role Radar. Built with ❤️ by Eleni Maria Designs.</p>
+</footer>
   </body>
 </html>
