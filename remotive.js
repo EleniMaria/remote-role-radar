@@ -1,6 +1,10 @@
 const apiUrl = 'https://remoteok.com/api';
 const jobContainer = document.getElementById('job-listings');
 const trackedTable = document.getElementById('tracked-jobs');
+const toggle = document.getElementById('theme-toggle');
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+});
 
 // Utility functions for localStorage
 function loadTrackedJobs() {
@@ -56,50 +60,65 @@ function renderTrackedJobs() {
 renderTrackedJobs(); // Call once on page load
 
 // Fetch job data
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    const jobs = data.slice(1, 11); // Remove metadata
+const spinner = document.getElementById('loading-spinner');
 
-    jobs.forEach(job => {
-      const jobCard = document.createElement('div');
-      jobCard.className = 'job-card';
-      jobCard.innerHTML = `
-        <h3><a href="${job.url}" target="_blank">${job.position}</a></h3>
-        <p><strong>Company:</strong> ${job.company}</p>
-        <p><strong>Location:</strong> ${job.location || 'Remote'}</p>
-        <p>${job.tags?.join(', ')}</p>
-        <button class="track-btn">Track Job</button>
-      `;
-      jobContainer.appendChild(jobCard);
+function fetchJobs() {
+  spinner.classList.remove('hidden');
+  jobContainer.innerHTML = '';
 
-      // Track job button click
-      jobCard.querySelector('.track-btn').addEventListener('click', () => {
-        const trackedJobs = loadTrackedJobs();
-        if (trackedJobs.some(j => j.url === job.url)) {
-          alert("You've already tracked this job.");
-          return;
-        }
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      const jobs = data.slice(1, 11); // Remove metadata
 
-        trackedJobs.push({
-          company: job.company,
-          title: job.position,
-          status: 'Saved',
-          dateApplied: '',
-          followUpDate: '',
-          notes: '',
-          url: job.url
-        });
+  jobs
+  .filter(job => job.company && job.position && job.url) // ✅ Only include jobs with a company, title, and URL
+  .forEach(job => {
+    const jobCard = document.createElement('div');
+    jobCard.className = 'job-card';
+    jobCard.innerHTML = `
+      <h3><a href="${job.url}" target="_blank">${job.position}</a></h3>
+      <p><strong>Company:</strong> ${job.company}</p>
+      <p><strong>Location:</strong> ${job.location || 'Remote'}</p>
+      <p>${job.tags?.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</p>
+      <button class="track-btn">Track Job</button>
+    `;
+    jobContainer.appendChild(jobCard);
 
-        saveTrackedJobs(trackedJobs);
-        renderTrackedJobs();
+    jobCard.querySelector('.track-btn').addEventListener('click', () => {
+      const trackedJobs = loadTrackedJobs();
+      if (trackedJobs.some(j => j.url === job.url)) {
+        alert("You've already tracked this job.");
+        return;
+      }
+
+      trackedJobs.push({
+        company: job.company,
+        title: job.position,
+        status: 'Saved',
+        dateApplied: '',
+        followUpDate: '',
+        notes: '',
+        url: job.url
       });
+
+      saveTrackedJobs(trackedJobs);
+      renderTrackedJobs();
     });
-  })
-  .catch(err => {
-    console.error("Job fetch failed:", err);
-    jobContainer.innerHTML = `<p>Unable to load jobs.</p>`;
   });
+
+    })
+    .catch(err => {
+      console.error("Job fetch failed:", err);
+      jobContainer.innerHTML = `<p>Unable to load jobs.</p>`;
+    })
+    .finally(() => {
+      spinner.classList.add('hidden');
+    });
+}
+
+fetchJobs(); // Replace direct fetch call with this
+
 
 // Search filter
 document.getElementById('search').addEventListener('input', function (e) {
