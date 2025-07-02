@@ -17,6 +17,10 @@
         <a href="#jobs" class="btn primary">Explore Remote Jobs</a>
         <a href="#tracker" class="btn secondary">Start Tracking</a>
       </div>
+      <label class="theme-toggle">
+    <input type="checkbox" id="theme-toggle" />
+    <span class="toggle-label">🌙 Dark Mode</span>
+    </label>
     </header>
 
     <section class="features">
@@ -66,6 +70,7 @@
  <section id="jobs">
   <h2>Latest Remote Jobs</h2>
   <div class="search-bar"><input type="text" id="search" placeholder="Search jobs..." /></div>
+  <div id="loading-spinner" class="spinner hidden">Loading jobs...</div>
   <div id="job-listings" class="job-listings"></div>
 </section>
 <section id="tracker">
