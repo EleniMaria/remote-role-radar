@@ -153,3 +153,95 @@ body {
 #job-tracker select, #job-tracker input {
   width: 100%;
 }
+
+.spinner {
+  text-align: center;
+  font-weight: bold;
+  margin: 2rem 0;
+  font-size: 1.2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.job-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+.job-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.job-card h3 a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+.job-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #eef;
+  color: #334;
+  font-size: 0.75rem;
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  margin-right: 0.3em;
+}
+:root {
+  --bg-color: #fff;
+  --text-color: #111;
+  --card-bg: #f9f9f9;
+  --border-color: #ddd;
+  --link-color: #0077cc;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+body.dark-mode {
+  --bg-color: #1e1e1e;
+  --text-color: #f1f1f1;
+  --card-bg: #2a2a2a;
+  --border-color: #444;
+  --link-color: #4ea1ff;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+}
+.theme-toggle input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode .feature h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .feature p {
+  color: #cccccc;
+}
+
+body.dark-mode .feature span {
+  color: #f4d35e; /* Optional: make icons stand out */
+}
+body.dark-mode .feature {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1rem;
+}
